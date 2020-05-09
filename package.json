@@ -1,0 +1,44 @@
+{
+  "name": "@so-xzen/api-social-networks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "yarn install && eslint ./app/* ./test/* index.js && yarn start",
+    "start": "eslint ./app/* index.js && node index.js",
+    "test": "mocha --reporter spec",
+    "lint": "eslint ./app/* ./test/* index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xzen/api-social-networks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xzen/api-social-networks/issues"
+  },
+  "homepage": "https://github.com/xzen/api-social-networks#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "mongoose": "^5.9.12",
+    "node-validator": "0.1.27"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^7.1.2"
+  }
+}
