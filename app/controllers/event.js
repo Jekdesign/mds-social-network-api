@@ -18,6 +18,7 @@ class Event {
     this.deleteEvent()
     this.deleteEvents()
     this.joinEvent()
+    this.leaveEvent()
   }
 
   /**
@@ -186,20 +187,72 @@ class Event {
     this.app.put('/event/join/:id', (req, res) => {
       try {
         this.EventModel.findById(req.params.id)
-        const userId = (req.body.userId) ? req.body.userId : false
           .then(event => {
+            const userId = req.body.members ? req.body.members : false
             const members = event.members
-            members.push(userId)
+            if (userId) {
+              members.push(userId)
+              this.EventModel.findByIdAndUpdate({ _id: req.params.id }, { members: members }).then(event => {
+                res.status(200).json(event)
+              }).catch(err => {
+                res.status(400).json({
+                  code: 400,
+                  message: err
+                })
+              })
+            }
           })
-
-        this.EventModel.findByIdAndUpdate(req.params.id, req.body).then(event => {
-          res.status(200).json(event || {})
-        }).catch(err => {
-          res.status(500).json({
-            code: 500,
-            message: err
+          .catch(err => {
+            res.status(400).json({
+              error: {
+                status: 400,
+                message: err
+              }
+            })
           })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
         })
+      }
+    })
+  }
+
+  leaveEvent () {
+    this.app.put('/event/leave/:id', (req, res) => {
+      try {
+        this.EventModel.findById(req.params.id)
+          .then(event => {
+            const userId = req.body.members ? req.body.members : false
+            const members = event.members
+            if (userId) {
+              if (members.includes(userId)) {
+                const index = members.indexOf(userId)
+                members.splice(index, 1)
+                this.EventModel.findByIdAndUpdate({
+                  _id: req.params.id
+                }, {
+                  members: members
+                }).then(event => {
+                  res.status(200).json(event)
+                }).catch(err => {
+                  res.status(400).json({
+                    code: 400,
+                    message: err
+                  })
+                })
+              }
+            }
+          })
+          .catch(err => {
+            res.status(400).json({
+              error: {
+                status: 400,
+                message: err
+              }
+            })
+          })
       } catch (err) {
         res.status(500).json({
           code: 500,
