@@ -66,16 +66,27 @@ class Server {
    * Routes
    */
   routes () {
+    this.app.use((req, res, next) => {
+      if (req.headers['x-access-token']) {
+        if (req.headers['x-access-token'] !== process.env.ACCESS_TOKEN) {
+          res.status(401).json({
+            code: 401,
+            message: 'not authorized'
+          })
+        } else {
+          next()
+        }
+      } else {
+        res.status(404).json({
+          code: 404,
+          message: 'No token found'
+        })
+      }
+    })
+    
     new routes.User(this.app, this.connect)
     new routes.Event(this.app, this.connect)
     new routes.Group(this.app, this.connect)
-
-    this.app.use((req, res) => {
-      res.status(404).json({
-        code: 404,
-        message: 'not found'
-      })
-    })
   }
 
   /**
