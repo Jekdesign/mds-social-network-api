@@ -163,7 +163,7 @@ class Group {
   deleteGroups () {
     this.app.delete('/group/delete', (req, res) => {
       try {
-        this.GroupModel.remove({}).then(group => {
+        this.GroupModel.deleteMany({}).then(group => {
           res.status(200).json(group)
         }).catch(err => {
           res.status(500).json({
@@ -188,22 +188,26 @@ class Group {
       try {
         this.GroupModel.findById(req.params.id)
           .then(group => {
-            const userId = req.body.members ? req.body.members : false
+            const userIdStaff = req.body.staff ? req.body.staff : false
+            const userIdMember = req.body.members ? req.body.members : false
+            const staff = group.staff
             const members = group.members
-            if (userId) {
-              members.push(userId)
-              this.GroupModel.findByIdAndUpdate({
-                _id: req.params.id
-              }, {
-                members: members
-              }).then(group => {
-                res.status(200).json(group)
-              }).catch(err => {
-                res.status(400).json({
-                  code: 400,
-                  message: err
+            if (userIdStaff || userIdMember) {
+              if (userIdStaff) {
+                (staff).push(userIdStaff)
+              }
+              if (userIdMember) {
+                (members).push(userIdMember)
+              }
+              this.GroupModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members })
+                .then(e => {
+                  res.status(200).json(e)
+                }).catch(err => {
+                  res.status(400).json({
+                    code: 400,
+                    message: err
+                  })
                 })
-              })
             }
           })
           .catch(err => {
@@ -228,24 +232,29 @@ class Group {
       try {
         this.GroupModel.findById(req.params.id)
           .then(group => {
-            const userId = req.body.members ? req.body.members : false
+            const userIdStaff = req.body.staff ? req.body.staff : false
+            const userIdMember = req.body.members ? req.body.members : false
+            const staff = group.staff
             const members = group.members
-            if (userId) {
-              if (members.includes(userId)) {
-                const index = members.indexOf(userId)
-                members.splice(index, 1)
-                this.GroupModel.findByIdAndUpdate({
-                  _id: req.params.id
-                }, {
-                  members: members
-                }).then(group => {
-                  res.status(200).json(group)
-                }).catch(err => {
-                  res.status(400).json({
-                    code: 400,
-                    message: err
+            if (userIdStaff || userIdMember) {
+              if (staff.includes(userIdStaff) || members.includes(userIdMember)) {
+                if (userIdStaff) {
+                  const index = staff.indexOf(userIdStaff)
+                  staff.splice(index, 1)
+                }
+                if (userIdMember) {
+                  const index = members.indexOf(userIdMember)
+                  members.splice(index, 1)
+                }
+                this.GroupModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members })
+                  .then(e => {
+                    res.status(200).json(e)
+                  }).catch(err => {
+                    res.status(400).json({
+                      code: 400,
+                      message: err
+                    })
                   })
-                })
               }
             }
           })
