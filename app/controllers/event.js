@@ -192,7 +192,7 @@ class Event {
             const userIdMember = req.body.members ? req.body.members : false
             const staff = event.staff
             const members = event.members
-            if (userIdStaff && userIdMember) {
+            if (userIdStaff || userIdMember) {
               if (userIdStaff) {
                 (staff).push(userIdStaff)
               }
