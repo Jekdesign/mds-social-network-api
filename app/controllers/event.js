@@ -199,14 +199,15 @@ class Event {
               if (userIdMember) {
                 (members).push(userIdMember)
               }
-              this.EventModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members }).then(e => {
-                res.status(200).json(e)
-              }).catch(err => {
-                res.status(400).json({
-                  code: 400,
-                  message: err
+              this.EventModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members })
+                .then(e => {
+                  res.status(200).json(e)
+                }).catch(err => {
+                  res.status(400).json({
+                    code: 400,
+                    message: err
+                  })
                 })
-              })
             }
           })
           .catch(err => {
@@ -231,24 +232,29 @@ class Event {
       try {
         this.EventModel.findById(req.params.id)
           .then(event => {
-            const userId = req.body.members ? req.body.members : false
+            const userIdStaff = req.body.staff ? req.body.staff : false
+            const userIdMember = req.body.members ? req.body.members : false
+            const staff = event.staff
             const members = event.members
-            if (userId) {
-              if (members.includes(userId)) {
-                const index = members.indexOf(userId)
-                members.splice(index, 1)
-                this.EventModel.findByIdAndUpdate({
-                  _id: req.params.id
-                }, {
-                  members: members
-                }).then(event => {
-                  res.status(200).json(event)
-                }).catch(err => {
-                  res.status(400).json({
-                    code: 400,
-                    message: err
+            if (userIdStaff || userIdMember) {
+              if (staff.includes(userIdStaff) || members.includes(userIdMember)) {
+                if (userIdStaff) {
+                  const index = staff.indexOf(userIdStaff)
+                  staff.splice(index, 1)
+                }
+                if (userIdMember) {
+                  const index = members.indexOf(userIdMember)
+                  members.splice(index, 1)
+                }
+                this.EventModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members })
+                  .then(e => {
+                    res.status(200).json(e)
+                  }).catch(err => {
+                    res.status(400).json({
+                      code: 400,
+                      message: err
+                    })
                   })
-                })
               }
             }
           })
