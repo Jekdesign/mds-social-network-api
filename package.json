@@ -21,6 +21,7 @@
   "homepage": "https://github.com/xzen/api-social-networks#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "check": "^1.0.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
@@ -28,7 +29,8 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "mongoose": "^5.9.12",
-    "node-validator": "0.1.27"
+    "node-validator": "0.1.27",
+    "nodemon": "^2.0.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

@@ -17,10 +17,7 @@ const Schema = new mongoose.Schema({
   members: [{
     type: mongoose.ObjectId
   }],
-  privacy: {
-    type: Boolean,
-    default: 1
-  },
+  privacy: Boolean,
   image_event: {
     type: String,
     default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
