@@ -6,24 +6,44 @@ const Schema = new mongoose.Schema({
   },
   name: String,
   description: String,
-  begin_date: {
-    type: Date
+  icon: {
+    type: String,
+    default: null
   },
-  end_date: Date,
-  location: String,
+  img_banner: {
+    type: String,
+    default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
+  },
+  typeGroup: {
+    type: String,
+    default: 'public'
+  },
   staff: [{
     type: mongoose.ObjectId
   }],
   members: [{
     type: mongoose.ObjectId
   }],
-  privacy: Boolean,
-  image_event: {
-    type: String,
-    default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
+  permissions: {
+    publishing: {
+      type: Boolean,
+      default: true
+    },
+    created_event: {
+      type: Boolean,
+      default: false
+    }
+  },
+  start_date: {
+    type: Date,
+    default: Date.now
+  },
+  actif: {
+    type: Boolean,
+    default: true
   }
 }, {
-  collection: 'events',
+  collection: 'groups',
   minimize: false,
   versionKey: false
 }).set('toJSON', {

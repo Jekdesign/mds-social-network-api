@@ -26,10 +26,7 @@ class User {
     this.app.post('/user/create', (req, res) => {
       try {
         // const userModel = this.UserModel(req.body)
-        const {
-          email,
-          password
-        } = req.body
+        const { email, password } = req.body
         const saltRounds = 10
         const salt = bcrypt.genSaltSync(saltRounds)
         const hashPass = bcrypt.hashSync(password, salt)

@@ -24,6 +24,10 @@ const Schema = new mongoose.Schema({
   image_event: {
     type: String,
     default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
+  },
+  actif: {
+    type: Boolean,
+    default: true
   }
 }, {
   collection: 'events',

@@ -60,6 +60,10 @@ const Schema = new mongoose.Schema({
   updated_date: {
     type: Date,
     default: Date.now
+  },
+  actif: {
+    type: Boolean,
+    default: true
   }
 }, {
   collection: 'users',

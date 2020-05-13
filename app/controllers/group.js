@@ -28,10 +28,10 @@ class Group {
   createGroup () {
     this.app.post('/group/create', (req, res) => {
       try {
-        const groupModel = this.GroupModel(req.body)
+        const groupModel = new this.GroupModel(req.body)
         if (req.body.administrator) {
-          this.UserModel.findById(req.body.administrator)
-            .then((user) => {
+          if (req.body.typeGroup && (req.body.typeGroup === 'public' || req.body.typeGroup === 'private' || req.body.typeGroup === 'secret')) {
+            this.UserModel.findById(req.body.administrator).then((user) => {
               if (user) {
                 groupModel
                   .save()
@@ -50,13 +50,13 @@ class Group {
                   message: 'No admin found'
                 })
               }
-            })
-            .catch((err) => {
+            }).catch((err) => {
               res.status(500).json({
                 code: 500,
                 message: err
               })
             })
+          }
         }
       } catch (err) {
         res.status(500).json({
