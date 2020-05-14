@@ -1,5 +1,4 @@
 const MessageModel = require('../models/message.js')
-const GroupModel = require('../models/group.js')
 
 /**
  * Message
@@ -9,7 +8,6 @@ class Message {
   constructor (app, connect) {
     this.app = app
     this.MessageModel = connect.model('Message', MessageModel)
-    this.GroupModel = connect.model('Group', GroupModel)
 
     this.createMessage()
     this.showMessages()

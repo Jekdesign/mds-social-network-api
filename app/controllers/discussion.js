@@ -1,4 +1,5 @@
 const DiscussionModel = require('../models/discussion.js')
+const MessageModel = require('../models/message.js')
 
 /**
  * Discussion
@@ -8,6 +9,7 @@ class Discussion {
   constructor (app, connect) {
     this.app = app
     this.DiscussionModel = connect.model('Discussion', DiscussionModel)
+    this.MessageModel = connect.model('Message', MessageModel)
 
     this.createDiscussion()
     this.showDiscussions()
@@ -221,11 +223,33 @@ class Discussion {
    * Show All Messages in thread
    */
   showMsgDiscussions () {
-    this.app.get('/discussion/show', (req, res) => {
+    this.app.get('/discussion/message/show/:id', (req, res) => {
       try {
-        this.DiscussionModel.find({}).then((discussion) => {
-          res.status(200).json(discussion)
-        })
+        this.DiscussionModel.findById(req.params.id)
+          .then((discut) => {
+            if (discut) {
+              this.MessageModel.find({ discussionId: req.params.id }).populate('authorId, discussionId')
+                .then((msg) => {
+                  res.status(200).json({
+                    result: {
+                      total: Object.keys(msg).length,
+                      msg
+                    }
+                  }
+                  )
+                })              
+            } else {
+              res.status(400).json({
+                code: 400,
+                message: 'id message found'
+              })
+            }
+          }).catch(err => {
+            res.status(400).json({
+              code: 400,
+              message: err
+            })
+          })
       } catch (err) {
         res.status(500).json({
           code: 500,

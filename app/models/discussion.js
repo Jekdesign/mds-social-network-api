@@ -6,7 +6,7 @@ const Schema = new mongoose.Schema({
     required: true,
     enum: ['group', 'event']
   },
-  created_date: {
+  startDate: {
     type: Date,
     default: Date.now
   },
