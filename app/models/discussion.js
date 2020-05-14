@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
-  type: String,
+  type: {
+    type: String,
+    required: true,
+    enum: ['group', 'event']
+  },
   created_date: {
     type: Date,
     default: Date.now
