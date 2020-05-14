@@ -26,13 +26,36 @@ class User {
     this.app.post('/user/create', (req, res) => {
       try {
         // const userModel = this.UserModel(req.body)
-        const { email, password } = req.body
+        const {
+          firstname,
+          lastName, 
+          email,
+          password,
+          age, 
+          streetNumber,
+          streetType,
+          streetName,
+          city,
+          cityCode,
+          phone
+        } = req.body
         const saltRounds = 10
         const salt = bcrypt.genSaltSync(saltRounds)
         const hashPass = bcrypt.hashSync(password, salt)
-        const userModel = new this.UserModel({ first_name: req.body.first_name, last_name: req.body.last_name, email: email, password: hashPass })
-        userModel
-          .save()
+        const userModel = new this.UserModel({ 
+          firstname,
+          lastName,
+          email,
+          password: hashPass,
+          age,
+          streetNumber,
+          streetType,
+          streetName,
+          city,
+          cityCode,
+          phone
+        })
+        userModel.save()
           .then((user) => {
             res.status(200).json(user || {})
           })

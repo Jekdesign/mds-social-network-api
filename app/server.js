@@ -88,7 +88,7 @@ class Server {
     new routes.Event(this.app, this.connect)
     new routes.Group(this.app, this.connect)
     new routes.Discussion(this.app, this.connect)
-    // new routes.Message(this.app, this.connect)
+    new routes.Message(this.app, this.connect)
   }
 
   /**

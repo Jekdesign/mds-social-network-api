@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
-  first_name: {
+  firstname: {
     type: String,
     trim: true,
     required: true
   },
-  last_name: {
+  lastName: {
     type: String,
     trim: true,
     required: true
@@ -26,15 +26,15 @@ const Schema = new mongoose.Schema({
     type: Number,
     trim: true
   },
-  street_number: {
+  streetNumber: {
     type: String,
     trim: true
   },
-  street_type: {
+  streetType: {
     type: String,
     trim: true
   },
-  street_name: {
+  streetName: {
     type: String,
     trim: true
   },
@@ -42,22 +42,22 @@ const Schema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  city_code: {
+  cityCode: {
     type: String,
     trim: true
   },
   phone: {
     type: String
   },
-  image_profil: {
+  imgProfil: {
     type: String,
-    default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
+    default: null
   },
-  creation_date: {
+  startdate: {
     type: Date,
     default: Date.now
   },
-  updated_date: {
+  updateDate: {
     type: Date,
     default: Date.now
   },

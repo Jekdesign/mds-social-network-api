@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
   administrator: {
-    type: mongoose.ObjectId
+    type: mongoose.ObjectId,
+    ref: 'Person'
   },
   name: String,
   description: String,
@@ -12,17 +13,19 @@ const Schema = new mongoose.Schema({
   },
   img_banner: {
     type: String,
-    default: 'https://pbs.twimg.com/profile_images/1126137112825335808/L5WvNz8W_400x400.jpg'
+    default: null
   },
   typeGroup: {
     type: String,
     default: 'public'
   },
   staff: [{
-    type: mongoose.ObjectId
+    type: mongoose.ObjectId,
+    ref: 'Person'
   }],
   members: [{
-    type: mongoose.ObjectId
+    type: mongoose.ObjectId,
+    ref: 'Person'
   }],
   permissions: {
     publishing: {

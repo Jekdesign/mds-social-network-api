@@ -11,7 +11,7 @@ const Schema = new mongoose.Schema({
     default: 1
   }
 }, {
-  collection: 'discussion',
+  collection: 'discussions',
   minimize: false,
   versionKey: false
 }).set('toJSON', {

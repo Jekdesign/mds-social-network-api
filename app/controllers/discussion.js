@@ -12,6 +12,7 @@ class Discussion {
     this.createDiscussion()
     this.showDiscussions()
     this.showDiscussion()
+    this.showMsgDiscussions()
     this.updateDiscussion()
     this.deleteDiscussion()
     this.deleteDiscussions()
@@ -215,6 +216,24 @@ class Discussion {
       }
     })
   }
+
+  /**
+   * Show All Messages in thread
+   */
+  showMsgDiscussions () {
+    this.app.get('/discussion/show', (req, res) => {
+      try {
+        this.DiscussionModel.find({}).then((discussion) => {
+          res.status(200).json(discussion)
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
+        })
+      }
+    })
+  }  
 }
 
 module.exports = Discussion
