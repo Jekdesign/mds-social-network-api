@@ -31,14 +31,14 @@ npm start
 
 ### Progression methods :
 
-- **[x]** **Users**
+- [x] **Users**
 - [x] **Events**
 - [x] **Groups**
-- [x] Discussions
-- [x] Messages
-- [x] Comments
-- [x] Albums
-- [x] Photos (album)
+- [x] **Discussions**
+- [x] **Messages**
+- [x] **Comments**
+- [x] **Albums**
+- [x] **Photos (album)**
 - [ ] Polls
 - [ ] Tickets
 - [ ] Shoppings
