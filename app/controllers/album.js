@@ -21,6 +21,7 @@ class Album {
     this.deleteAlbums()
 
     this.createPhotoAlbum()
+    this.showPhotosAlbum()
   }
 
   /**
@@ -184,6 +185,44 @@ class Album {
         res.status(500).json({
           code: 500,
           photo: err
+        })
+      }
+    })
+  }
+
+  /**
+   * Show All photos in album
+   */
+  showPhotosAlbum () {
+    this.app.get('/album/:id/photo/show', (req, res) => {
+      try {
+        this.AlbumModel.findById(req.params.id).populate('eventId').then(albums => {
+          if (albums) {
+            this.PhotoModel.find({ albumId: req.params.id }).populate('authorId, albumId')
+              .then(photo => {
+                res.status(200).json({
+                  result: {
+                    all: Object.keys(photo).length,
+                    photo
+                  }
+                })
+              })
+          } else {
+            res.status(400).json({
+              code: 400, 
+              message: 'No id albums found'
+            })
+          }
+        }).catch(err => {
+          res.status(400).json({
+            code: 400,
+            error: err
+          })
+        })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          message: err
         })
       }
     })

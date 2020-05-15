@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const Schema = new mongoose.Schema({
   albumId: {
     type: mongoose.ObjectId,
-    ref: 'Album'
+    ref: 'Album',
+    required: true
   },
   path: {
     type: String
