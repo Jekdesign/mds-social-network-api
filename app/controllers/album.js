@@ -1,4 +1,6 @@
 const AlbumModel = require('../models/album.js')
+const PhotoModel = require('../models/photo.js')
+const CommentModel = require('../models/comment.js')
 
 /**
  * Album
@@ -8,6 +10,8 @@ class Album {
   constructor (app, connect) {
     this.app = app
     this.AlbumModel = connect.model('Album', AlbumModel)
+    this.PhotoModel = connect.model('Photo', PhotoModel)
+    this.CommentModel = connect.model('Comment', CommentModel)
 
     this.createAlbum()
     this.showAlbums()
@@ -15,6 +19,8 @@ class Album {
     this.updateAlbum()
     this.deleteAlbum()
     this.deleteAlbums()
+
+    this.createPhotoAlbum()
   }
 
   /**
@@ -151,6 +157,33 @@ class Album {
         res.status(500).json({
           code: 500,
           album: err
+        })
+      }
+    })
+  }
+
+  /**
+   * Create photo in album
+   */
+  createPhotoAlbum () {
+    this.app.post('/album/:id/photo/create', (req, res) => {
+      try {
+        req.body.albumId = req.param.id
+        const PhotoModel = new this.PhotoModel(req.body)
+        PhotoModel.save()
+          .then(photo => {
+            res.status(201).json(photo || {})
+          })
+          .catch(err => {
+            res.status(400).json({
+              code: 400,
+              photo: err
+            })
+          })
+      } catch (err) {
+        res.status(500).json({
+          code: 500,
+          photo: err
         })
       }
     })

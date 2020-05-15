@@ -1,14 +1,19 @@
 const mongoose = require('mongoose')
 
 const Schema = new mongoose.Schema({
-  eventId: {
+  albumId: {
     type: mongoose.ObjectId,
-    ref: 'Event',
-    required: true
+    ref: 'Album'
+  },
+  path: {
+    type: String
   },
   name: {
-    type: String,
-    required: true
+    type: String
+  },
+  authorId: {
+    type: mongoose.ObjectId,
+    ref: 'Person'
   },
   startDate: {
     type: Date,
@@ -19,7 +24,7 @@ const Schema = new mongoose.Schema({
     default: 1
   }
 }, {
-  collection: 'albums',
+  collection: 'photos',
   minimize: false,
   versionKey: false
 }).set('toJSON', {

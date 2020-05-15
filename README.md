@@ -10,7 +10,7 @@ npm install
 
 Configuration :
 
-Create file ".env" in root directory adn add config :
+Create file ".env" in root directory add config :
 
 ATLAS_URI = mongodb+srv://<name>:<pass>@xxxxxxxxxx
 
