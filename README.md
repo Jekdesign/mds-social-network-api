@@ -26,14 +26,14 @@ npm start
 
 ## Access Postman Architecture Collections:
 
-[click here](https://documenter.getpostman.com/view/11411211/SzmjyEyD?version=latest#664768fd-8f5c-4091-90fa-fd0c47c08784)
+[Architecture link](https://documenter.getpostman.com/view/11411211/SzmjyEyD?version=latest#664768fd-8f5c-4091-90fa-fd0c47c08784)
 
 
 ### Progression methods :
 
-- [x] Users
-- [x] Events
-- [x] Groups
+- **[x]** **Users**
+- [x] **Events**
+- [x] **Groups**
 - [x] Discussions
 - [x] Messages
 - [x] Comments
