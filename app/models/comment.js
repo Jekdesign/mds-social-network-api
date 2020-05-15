@@ -5,16 +5,16 @@ const Schema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: 'Person'
   },
-  message: String,
-  discussionId: {
+  comment: String,
+  messageId: {
     type: mongoose.ObjectId,
-    ref: 'Discussion'
+    ref: 'Message'
   },
-  created_date: {
+  startDate: {
     type: Date,
     default: Date.now
   },
-  updated_date: {
+  updateDate: {
     type: Date,
     default: null
   },
@@ -23,7 +23,7 @@ const Schema = new mongoose.Schema({
     default: 1
   }
 }, {
-  collection: 'messages',
+  collection: 'comments',
   minimize: false,
   versionKey: false
 }).set('toJSON', {

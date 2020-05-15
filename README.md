@@ -14,7 +14,8 @@ ACCESS_TOKEN = [xxxxxx secret code]
 Don't forget add "x-access-token" in header network panel and his value token
 
 Launch : npm start
-local url : http://localhost:3000/
+
+Local url : http://localhost:3000/
 
 ### Postman Architecture Collections :
 

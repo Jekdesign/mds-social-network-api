@@ -232,7 +232,7 @@ class Discussion {
                 .then((msg) => {
                   res.status(200).json({
                     result: {
-                      total: Object.keys(msg).length,
+                      all: Object.keys(msg).length,
                       msg
                     }
                   }
