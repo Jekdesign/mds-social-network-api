@@ -1,5 +1,5 @@
 const MessageModel = require('../models/message.js')
-
+const CommentModel = require('../models/comment.js')
 /**
  * Message
  * @class
@@ -8,7 +8,7 @@ class Message {
   constructor (app, connect) {
     this.app = app
     this.MessageModel = connect.model('Message', MessageModel)
-
+    this.CommentModel = connect.model('Comment', CommentModel)
     this.createMessage()
     this.showMessages()
     this.showMessage()
@@ -158,41 +158,33 @@ class Message {
   }
 
   /**
-   * Show comments message
+   * Show All Messages in thread
    */
   showCommentsMessage () {
-    this.app.put('/message/comments/:id', (req, res) => {
+    this.app.get('/message/comment/show/:id', (req, res) => {
       try {
         this.MessageModel.findById(req.params.id)
-          .then(message => {
-            const userIdStaff = req.body.staff ? req.body.staff : false
-            const userIdMember = req.body.members ? req.body.members : false
-            const staff = message.staff
-            const members = message.members
-            if (userIdStaff || userIdMember) {
-              if (userIdStaff) {
-                (staff).push(userIdStaff)
-              }
-              if (userIdMember) {
-                (members).push(userIdMember)
-              }
-              this.MessageModel.findByIdAndUpdate({ _id: req.params.id }, { staff: staff, members: members })
-                .then(e => {
-                  res.status(200).json(e)
-                }).catch(err => {
-                  res.status(400).json({
-                    code: 400,
-                    message: err
+          .then((messaj) => {
+            if (messaj) {
+              this.CommentModel.find({ messageId: req.params.id }).populate('authorId, messageId')
+                .then((cmt) => {
+                  res.status(200).json({
+                    result: {
+                      all: Object.keys(cmt).length,
+                      cmt
+                    }
                   })
                 })
+            } else {
+              res.status(400).json({
+                code: 400,
+                message: 'id message found'
+              })
             }
-          })
-          .catch(err => {
+          }).catch(err => {
             res.status(400).json({
-              error: {
-                status: 400,
-                message: err
-              }
+              code: 400,
+              message: err
             })
           })
       } catch (err) {
